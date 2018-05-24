@@ -5,7 +5,7 @@
 @font-face {
   font-family: "HK Grotesk Web";
   font-weight: 200;
-  src: url("../fonts/hkgrotesk-light-webfont.woff2") format("woff2"), url("../fonts/hkgrotesk-light-webfont-woff") format("woff");
+  src: url("../fonts/hkgrotesk-light-webfont.woff2") format("woff2"), url("../fonts/hkgrotesk-light-webfont.woff") format("woff");
 }
 
 @font-face {
@@ -33,22 +33,29 @@
 html {
   font-size: 16px;
   line-height: 1.5;
-  font-family: "HK Grotesk", Helvetica, arial, sans-serif;
+  font-family: "HK Grotesk Web", Helvetica, arial, sans-serif;
   color: #202024;
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-@media(min-width: 768px) {
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  margin-top: 80px;
+}
+
+@media (min-width: 768px) {
   html {
     font-size: 20px;
     line-height: 1.6;
   }
-}
-
-*, *:before, *:after {
-  box-sizing: inherit;
+  body {
+    margin-top: 136px;
+  }
 }
 
 /*
@@ -93,7 +100,6 @@ img {
 
 h1, h2, h3 {
   font-weight: 200;
-  margin: 0 0 24px;
 }
 
 h1 {
@@ -177,17 +183,6 @@ a:hover, a:focus {
 \*------------------------------------*/
 
 /*
-    Objects: List
-    ---
-    Small reusable object to remove default list styling from lists
-*/
-
-.o-list {
-  list-style: none;
-  padding: 0;
-}
-
-/*
     Objects: Row
     ---
     Creates a horizontal row that stretches the viewport and adds padding around children
@@ -199,16 +194,32 @@ a:hover, a:focus {
   padding: 24px 24px 0;
 }
 
+/* color modifiers */
+
+.o-row--neutral-x-light {
+  background-color: #F7F7FA;
+}
+
+.o-row--gradient-1 {
+  background: linear-gradient(to top right, #5051DB, #3887F7);
+  color: #fff;
+}
+
 /* size modifiers */
 
 .o-row--lg {
   padding: 48px 24px 24px;
 }
 
-/* color modifiers */
+/* fixed header */
 
-.o-row--neutral-x-light {
-  background-color: #F7F7FA;
+.o-row--header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  background-color: #fff;
 }
 
 @media (min-width: 768px) {
@@ -226,6 +237,12 @@ a:hover, a:focus {
   }
 }
 
+/* padding clear modifiers */
+
+.o-row--clear-top {
+  padding-top: 0;
+}
+
 /*
     Objects: Container
     ---
@@ -235,14 +252,33 @@ a:hover, a:focus {
 .o-container {
   margin-left: auto;
   margin-right: auto;
-  max-width: 70.5em;
-  /* 1128 / 16 = 70.5*/
-  /* 90 * 16px = 1440px */
+  max-width: 56.4em;
+  /* 56.4 * 20px = 1128px */
 }
 
-@media (768px) {
-  .o-container {
-    max-width: 56.4em;
+/*
+    Objects: section
+    ---
+    Creates vertical whitespace between adjacent sections inside a row
+*/
+
+.o-section {
+  overflow: auto;
+}
+
+.o-section+.o-section {
+  margin-top: 24px;
+}
+
+@media (min-width: 768px) {
+  .o-section--lg+.o-section--lg, .o-section--xl+.o-section--xl {
+    margin-top: 48px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .o-section--xl+.o-section--xl {
+    margin-top: 72px;
   }
 }
 
@@ -364,29 +400,14 @@ a:hover, a:focus {
 }
 
 /*
-    Objects: section
+    Objects: List
     ---
-    Creates vertical whitespace between adjacent sections inside a row
+    Small reusable object to remove default list styling from lists
 */
 
-.o-section {
-  overflow: auto;
-}
-
-.o-section+.o-section {
-  margin-top: 24px;
-}
-
-@media (min-width: 768px) {
-  .o-section--lg+.o-section--lg, .o-section--xl+.o-section--xl {
-    margin-top: 48px;
-  }
-}
-
-@media (min-width: 1200px) {
-  .o-section--xl+.o-section--xl {
-    margin-top: 72px;
-  }
+.o-list {
+  list-style: none;
+  padding: 0;
 }
 
 /*------------------------------------*\
@@ -403,61 +424,13 @@ a:hover, a:focus {
   height: 32px;
 }
 
-@media (min-width: 768px) {
-  .c-logo {
-    height: 40px;
-  }
-}
-
 .c-logo__symbol {
   height: 100%;
 }
 
 @media (min-width: 768px) {
-  .c-logo__symbol {}
-}
-
-/*
-    Component: Nav
-    ---
-    Main navigation of the site
-*/
-
-.c-nav {
-  font-size: 18px;
-  line-height: 24px;
-}
-
-.c-nav__link {
-  text-decoration: none;
-  font-weight: 400;
-  padding: 8px 0;
-  display: block;
-}
-
-.c-nav--meta {
-  font-size: 16px;
-}
-
-.c-nav--meta .c-nav__link, .c-nav--meta .c-nav__link:visited, .c-nav--meta .c-nav__link:active {
-  color: #6C6C75;
-}
-
-.c-nav__link--meta, .c-nav__link--meta:visited, .c-nav__link--meta:active {
-  color: #202024;
-}
-
-.c-nav__link:hover, .c-nav__link:focus {
-  color: #5051db;
-}
-
-@media (min-width: 768px) {
-  .c-nav__list {
-    display: flex;
-    margin: -8px -16px;
-  }
-  .c-nav__link {
-    padding: 8px 16px;
+  .c-logo {
+    height: 40px;
   }
 }
 
@@ -473,15 +446,129 @@ a:hover, a:focus {
 
 @media (min-width: 992px) {
   .c-header {
-    display: -webkit-flex;
-    display: -ms-flexbox;
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
     align-items: center;
   }
   .c-header__nav {
     display: block;
+  }
+  .c-header__nav--main {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-top: 12px;
+  }
+}
+
+/*
+    Component: footer
+    ---
+    Main footer of the website
+*/
+
+.c-footer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.c-footer__logo {
+  width: 100%;
+}
+
+.c-footer__nav {
+  width: 50%;
+}
+
+@media (min-width: 768px) {
+  .c-footer {
+    justify-content: center;
+    align-items: center;
+  }
+  .c-footer__logo {
+    display: flex;
+    justify-content: center;
+    padding: 0 12px;
+  }
+  .c-footer__nav {
+    width: auto;
+    padding: 0 16px;
+  }
+}
+
+@media (min-width: 992px) {
+  .c-footer {
+    justify-content: space-between;
+  }
+  .c-footer__nav {
+    padding: 0;
+  }
+  .c-footer__logo+.c-footer__nav {
+    order: -1;
+  }
+  .c-footer__logo {
+    width: auto;
+  }
+  /*
+        Bonus: real centering with CSS
+        Checkout: https://css-tricks.com/centering-css-complete-guide/
+    */
+  /* .c-footer__logo {
+        width: auto;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .c-footer__logo .c-logo {
+        margin-bottom: 0;
+    } */
+}
+
+/*
+    Component: Nav
+    ---
+    Main navigation of the site
+*/
+
+.c-nav {
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.c-nav--meta {
+  font-size: 16px;
+}
+
+.c-nav__link {
+  text-decoration: none;
+  font-weight: 400;
+  display: block;
+  padding: 8px 0;
+}
+
+.c-nav__link, .c-nav__link:visited, .c-nav__link:active {
+  color: #202024;
+}
+
+.c-nav__link--meta, .c-nav__link--meta:visited, .c-nav__link--meta:active {
+  color: #6C6C75;
+}
+
+.c-nav__link:hover, .c-nav__link:focus {
+  color: #5051db;
+}
+
+@media (min-width: 768px) {
+  .c-nav__list {
+    display: flex;
+    margin-left: -16px;
+    margin-right: -16px;
+  }
+  .c-nav__link {
+    padding: 8px 16px;
   }
 }
 
@@ -553,9 +640,182 @@ a:hover, a:focus {
   }
 }
 
+/*
+    Component: figure
+    ---
+    Special type of figure and figcaption
+*/
+
+.c-figure {
+  position: relative;
+}
+
+.c-figure__caption {
+  line-height: 15px;
+  margin-top: 8px;
+  padding-left: 6px;
+  padding-top: 1px;
+  border: 2px solid #5051DB;
+  border-width: 0 0 0 2px;
+}
+
+@media (min-width: 768px) {
+  .c-figure__caption--absolute {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-right: 8px;
+    text-align: right;
+    background-color: #fff;
+    padding: 16px;
+    max-width: 260px;
+    border-width: 0 4px 0 0;
+  }
+}
+
+/*
+    Component: Title icon
+    ---
+    Special type of title with icon
+*/
+
+.c-title-icon {
+  display: flex;
+  align-items: flex-start;
+}
+
+.c-title-icon__icon {
+  height: 70px;
+  margin-right: 20px;
+}
+
+@media (min-width: 768px) {
+  .c-title-icon__icon {
+    height: 84px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .c-title-icon__icon {
+    height: 112px;
+  }
+}
+
+/*
+    Component: CTA link
+    ---
+    Small cta link with custom animation
+*/
+
+.c-link-cta {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  padding: 4px 0;
+  transition: color .175s ease-in;
+}
+
+.c-link-cta, .c-link-cta:visited, .c-link-cta:active {
+  color: #7373F5;
+}
+
+.c-link-cta::after {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  width: 100%;
+  background-color: #7373F5;
+  transform: scaleX(.5);
+  transform-origin: left;
+  transition-property: transform background-color;
+  transition-duration: .175s;
+  transition-timing-function: ease-in;
+}
+
+.c-link-cta:hover {
+  color: #3E3EA8;
+}
+
+.c-link-cta:hover::after {
+  transform: scaleX(1);
+  background-color: #3E3EA8;
+}
+
+/* inversed */
+
+.c-link-cta--inverse, .c-link-cta--inverse:visited, .c-link-cta--inverse:active {
+  color: #fff;
+}
+
+.c-link-cta--inverse::after {
+  background-color: #fff;
+}
+
+.c-link-cta--inverse:hover::after {
+  background-color: #fff;
+}
+
 /*------------------------------------*\
   #UTILITIES
 \*------------------------------------*/
+
+/*
+    Utilities: color
+    ---
+    Utility classes to put specific colors onto elements
+*/
+
+.u-color-primary-light {
+  color: #7373F5;
+}
+
+.u-color-primary-base {
+  color: #5051DB;
+}
+
+.u-color-primary-dark {
+  color: #3E3EA8;
+}
+
+/*
+    Utilities: spacing
+    ---
+    Utility classes to put specific margins and paddings onto elements
+*/
+
+.u-pt-clear {
+  padding-top: 0 !important;
+}
+
+.u-mb-clear {
+  margin-bottom: 0 !important;
+}
+
+.u-mb-xs {
+  margin-bottom: 4px !important;
+}
+
+.u-mb-sm {
+  margin-bottom: 8px !important;
+}
+
+.u-mb-md {
+  margin-bottom: 16px !important;
+}
+
+.u-mb-lg {
+  margin-bottom: 32px !important;
+}
+
+.u-mb-xl {
+  margin-bottom: 48px !important;
+}
 
 /*
     Utilities: max-width
@@ -784,34 +1044,6 @@ a:hover, a:focus {
   .u-5-of-6-bp4 {
     width: 83.3333333333% !important;
   }
-}
-
-/*
-    Utilities: spacing
-    ---
-    Utility classes to put specific margins and paddings onto elements
-*/
-
-.u-pt-clear {
-  padding-top: 0 !important;
-}
-
-/*
-    Utilities: color
-    ---
-    Utility classes to put specific colors onto elements
-*/
-
-.u-color-primary-light {
-  color: #7373F5 !important;
-}
-
-.u-color-primary-base {
-  color: #5051DB !important;
-}
-
-.u-color-primary-dark {
-  color: #3E3EA8 !important;
 }
 
 /*------------------------------------*\
